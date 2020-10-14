@@ -1,41 +1,45 @@
 
 function fetchMetric(date, path, auth)
 { 
-  var response = UrlFetchApp.fetch(`http://49396139c4bf.ngrok.io/${path}/${date}`, {
-    'muteHttpExceptions': true,
+  const response = UrlFetchApp.fetch(`https://retrieval.wild-samphire.cdssandbox.xyz/events/${date}`, {
+    'muteHttpExceptions': false,
     'headers': {
       'Authorization': `Basic ${auth}`
     },});
   return JSON.parse(response.getContentText())
 }
 
-function getCount(source, json) { 
-  for (var index = 0; index < json.length; index++) {
-    var element = json[index];
-    if (element.source === source){
-      return element.count
-    }
+function parseJson(json){
+  const events = {
+    "OTKClaimed": {},
+    "OTKUnclaimed": { },
+    "OTKRegenerated": { },
+    "OTKGenerated": { },
+    "OTKExpired": { },
+    "OTKExhausted": { }
   }
-  return 0
+  json.forEach(function(x) {
+    events[x.identifier][x.source] = x.count
+  })
+  return events
 }
 
-function buildRow(date, json) { 
-  return [date, getCount("TestProvince", json), getCount("foobar", json)]
+function getValue(source, event){
+  const val = event[source]
+  return val ? val : 0
 }
 
-function updateSheet(ss, date, sheetName, metricName, auth){
+function myFunction() {
 
-  var sheet = ss.getSheetByName(sheetName)
-  var json = fetchMetric(date, metricName, auth )
-  sheet.appendRow(buildRow(date,json))
-}
+  const yesterday = Utilities.formatDate(new Date(new Date().getTime() - 86400000),'EST', 'yyyy-MM-dd')
+  const ss = SpreadsheetApp.getActiveSpreadsheet()
+  const json = fetchMetric(yesterday, metricName, 'MTIzNDU2Nzg5MDoxMjM0NTY3ODkw')
+  const events = parseJson(json)
 
-function myFunction() {  
-  var yesterday = Utilities.formatDate(new Date(new Date().getTime() - 86400000),'EST', 'yyyy-MM-dd')
-  // var today = Utilities.formatDate(new Date(),'EST', 'yyyy-MM-dd')
-  
-  var ss = SpreadsheetApp.getActiveSpreadsheet()
+  for (let key of Object.keys(events)) {
+    const sheet = ss.getSheetByName(key)
+    const event = events[key]
+    sheet.appendRow([yeseterday, getValue('gen',event), getValue('cdsdemo', event), getValue('ONApi', event)])
+  }
 
-  updateSheet(ss, yesterday, "OTK Generated", 'generated-keys', 'Zm9vOmJhcg==')
-  updateSheet(ss, yesterday, "OTK Unclaimed", 'unclaimed-keys', 'Zm9vOmJhcg==')
 }
