@@ -1,7 +1,7 @@
 
 function fetchMetric(date)
 { 
-  const response = UrlFetchApp.fetch(`https://retrieval.wild-samphire.cdssandbox.xyz/events/${date}`, {
+  const response = UrlFetchApp.fetch(`${store.getURL}/${date}`, {
     'muteHttpExceptions': false,
     'headers': {
       'Authorization': `Basic ${store.getCreds()}`
