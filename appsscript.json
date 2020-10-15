@@ -4,7 +4,7 @@
     "libraries": [{
       "userSymbol": "store",
       "libraryId": "14N58VdHQV5juC14ZmzNJll5N3RCZ--85mePLaI-o9eSJsmRlCtXQSm84",
-      "version": "1"
+      "version": "2"
     }]
   },
   "exceptionLogging": "STACKDRIVER",
