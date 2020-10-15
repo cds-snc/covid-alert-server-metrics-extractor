@@ -4,7 +4,7 @@ function fetchMetric(date)
   const response = UrlFetchApp.fetch(`https://retrieval.wild-samphire.cdssandbox.xyz/events/${date}`, {
     'muteHttpExceptions': false,
     'headers': {
-      'Authorization': `Basic ejhvUDBOUm5iSjhQMWZyUEdRcmQ6MDIwMURIM0c1TWxTbklJSnMwSUI=`
+      'Authorization': `Basic ${store.getCreds()}`
     },});
   return JSON.parse(response.getContentText())
 }
