@@ -32,11 +32,11 @@ function parseJson(json){
 * @param {string} creds - Base64 Encoded string for basic auth format of encoded string is uname:pword
 *
 */
-function updateSheet(url, creds, date) {
+function updateSheet(url, creds) {
 
-  //const yesterday = Utilities.formatDate(new Date(new Date().getTime() - 86400000),'EST', 'yyyy-MM-dd')
+  const yesterday = Utilities.formatDate(new Date(new Date().getTime() - 86400000),'EST', 'yyyy-MM-dd')
   const ss = SpreadsheetApp.getActiveSpreadsheet()
-  const json = fetchMetric(date, url, creds)
+  const json = fetchMetric(yesterday, url, creds)
   const events = parseJson(json)
 
   for (let key of Object.keys(events)) {
@@ -44,7 +44,7 @@ function updateSheet(url, creds, date) {
     const event = events[key]
 
     event.forEach(e => {
-      sheet.appendRow([date, e.source, e.count])
+      sheet.appendRow([yesterday, e.source, e.count])
     })
   }
 
