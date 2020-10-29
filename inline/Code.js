@@ -28,7 +28,8 @@ function parseJson(json){
     "OTKUnclaimed": JSON.parse(JSON.stringify(provinces)),
     "OTKRegenerated": JSON.parse(JSON.stringify(provinces)),
     "OTKExpired": JSON.parse(JSON.stringify(provinces)),
-    "OTKExhausted": JSON.parse(JSON.stringify(provinces))
+    "OTKExhausted": JSON.parse(JSON.stringify(provinces)),
+    "OTKExpiredNoUploads": JSON.parse(JSON.stringify(provinces))
   }
 
   json.forEach((x) => {

@@ -16,7 +16,8 @@ function parseJson(json){
     "OTKRegenerated": { },
     "OTKGenerated": { },
     "OTKExpired": { },
-    "OTKExhausted": { }
+    "OTKExhausted": { },
+    "OTKExpiredNoUploads": { }
   }
   json.forEach(function(x) {
     events[x.identifier][x.source] = x.count
