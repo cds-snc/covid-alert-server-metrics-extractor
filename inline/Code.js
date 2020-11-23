@@ -20,6 +20,7 @@ function parseJson(json){
     MBApi : { count : 0 },
     NSPortal : { count : 0 },
     PEPortal : { count : 0 },
+    NTPortal : { count: 0 },
   }
 
   const events = {
